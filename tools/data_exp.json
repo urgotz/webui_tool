@@ -1,0 +1,16 @@
+'dm642_image_raw'	: base64.b64encode(buff1.getvalue()).decode('utf-8'),	// 车采集的640×480图像，base64格式
+'dm642_image_clb'	: base64.b64encode(buff2.getvalue()).decode('utf-8'),	// 车采集的320×320图像，base64格式
+'image_from_db_clb'	: base64.b64encode(buff2.getvalue()).decode('utf-8'),	// 数据库搜到的320×320匹配图像，base64格式
+'image_from_db_x'	: random.randint(10,1000),								// 数据库搜到的匹配图像-x，float
+'image_from_db_y'	: random.randint(10,1000),								// 数据库搜到的匹配图像-y, float
+'image_from_db_t'	: random.randint(10,1000),								// 数据库搜到的匹配图像-heading，float
+'dsp_feedback_pos_x': random.randint(10,1000),								// 车反馈的x，float
+'dsp_feedback_pos_y': random.randint(10,1000),								// 车反馈的y，float
+'dsp_feedback_pos_t': random.randint(10,1000),								// 车反馈的heading，float
+'reg_result_conf'	: random.randint(10,1000),								// 车采集的图像与匹配图像的reg conf
+'reg_result_x'		: random.randint(10,1000),								// 车采集的图像与匹配图像的reg x
+'reg_result_y'		: random.randint(10,1000),								// 车采集的图像与匹配图像的reg y
+'reg_result_t'		: random.randint(10,1000),								// 车采集的图像与匹配图像的reg theta
+'com_config_param'	: random.randint(10,1000),								// 串口参数设置，字符串
+'process_value'		: random.randint(1,10),									// 串口数据值，不知道是啥，int？
+'is_raw_image_flag'	: 1,													// 车采集显示640还是320数据，我传给你

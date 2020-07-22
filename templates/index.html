@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app='texture_ui'>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<body ng-controller='MainCtrl' data-ng-init="restart_daemon_process()">
+		{%raw%}
+
+		<nav class='navbar navbar-default' role='navigation'>
+			<div class='container-fluid'>
+				<div class='navbar-header'>
+					<p class='navbar-brand' style='margin-left: 40px'>WebUI Tool</p>
+				</div>
+			</div>
+		</nav>
+
+		<div class='container'>
+
+			<div class='row' style='padding-top: 10px; margin-top: 2px'>
+				<div class='col-lg-1'></div>
+				<div class='col-lg-8'>
+					<select id="selected_output_io">
+						<option value = -1>--Choose an option--</option>
+						<option value = 1>Output_1</option>
+						<option value = 2>Output_2</option>
+						<option value = 3>Output_3</option>
+						<option value = 4>Output_4</option>
+					</select>
+					<button type='button' class='btn btn-default' style='padding: 5px; margin-right: 10px' ng-click='setio()'>SetIO</button>
+					<button type='button' class='btn btn-default' style='padding: 5px; margin-right: 10px' ng-click='unsetio()'>UnSetIO</button>
+				</div>
+				<!-- right side bar -->
+				<div class='col-lg-3' style='text-align: left; padding-left: 40px;'>
+				</div>
+			</div>
+
+		</div>
+
+		{%endraw%}
+
+		<link rel='stylesheet' href='../static/js/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
+		<link href="../static/js/bootstrap-toggle.min.css" rel="stylesheet">
+
+		<script src='../static/js/angular.min.js'></script>
+		<script type='text/javascript' src='../static/js/socket.io.min.js'></script>
+		<script src='../static/js/ng-file-upload.min.js'></script>
+		<script src='../static/js/ng-file-upload-shim.min.js'></script>
+		<script src="../static/js/bootstrap-toggle.min.js"></script>
+		<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+		<script>
+			angular.module('texture_ui', ['ngFileUpload']).controller('MainCtrl', function($scope, $http, Upload){
+				$scope.socket = io.connect();
+				$scope.socket.on('connect', function(){
+					$scope.socket.emit('connect establish event', {data: 'connection established...'})
+				});
+
+				$scope.socket.on('json', function(data){
+					console.log($scope.regres);
+					$scope.regres = data;
+				});
+
+			       // $scope.cur_output_io = 0
+
+				$scope.restart_daemon_process = function(){
+					$scope.show_image_running = true;
+					$http.get('/api/restart_daemon_process').then(function(response){
+					});
+				};
+				$scope.setio = function(){
+					var e = document.getElementById("selected_output_io");
+					var io_index = e.options[e.selectedIndex].value;
+					$http.get('/api/setio/' + io_index).then(function(response){
+					});
+				};
+				$scope.unsetio = function(){
+					var e = document.getElementById("selected_output_io");
+					var io_index = e.options[e.selectedIndex].value;
+					$http.get('/api/unsetio/' + io_index).then(function(response){
+					});
+				};
+			});
+		</script>
+	</body>
+</html>
+<!-- vim: sw=2 sts=2 ts=2 et
+-->
